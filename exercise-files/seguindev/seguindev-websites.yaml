@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: seguindev-websites
+  namespace: development
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      run: seguindev-websites
+  template:
+    metadata:
+      labels:
+        run: seguindev-websites
+    spec:
+      serviceAccountName: default
+      containers:
+      - name: adventurework
+        image: adventurework:0.0.2
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+      - name: consultantcompanion
+        image: consultantcompanion:0.0.1
+        ports:
+        - containerPort: 81
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
